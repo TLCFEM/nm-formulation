@@ -1,0 +1,12 @@
+section NM2D3 4 1.6472e+03 6.9600e+04 2.8400e+00 1.5500e+01 1.15 0.01 0. 0. 0.1452 1. 0.
+element NMB21 7 1 2 4
+element NMB21 8 5 6 4
+element NMB21 9 9 10 4
+section NM2D3 5 1.3543e+03 5.5100e+04 2.3350e+00 1.2700e+01 1.15 0.01 0. 0. 0.1299 1. 0.
+element NMB21 10 2 3 5
+element NMB21 11 6 7 5
+element NMB21 12 10 11 5
+section NM2D3 6 1.3543e+03 5.5100e+04 2.3350e+00 1.2700e+01 1.15 0.01 0. 0. 0.1299 1. 0.
+element NMB21 13 3 4 6
+element NMB21 14 7 8 6
+element NMB21 15 11 12 6

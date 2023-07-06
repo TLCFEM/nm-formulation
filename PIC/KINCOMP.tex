@@ -1,0 +1,24 @@
+\begin{tikzpicture}[>=latex]
+\draw[->](-5,0)--(5,0)node[below]{$\overline{M}_z$};
+\draw[->](0,-3)--(0,3)node[right]{$\overline{P}$};
+\coordinate(A)at(0,0);
+\coordinate(B)at(1.8,-1);
+\coordinate(C)at(4,-1);
+\draw[|<->|](0,1)--++(180:4)node[midway,fill=white,font=\scriptsize]{bounding limit};
+\node[fill=black,circle,inner sep=0,minimum size=2mm]at(A){};
+\node[fill=black,circle,inner sep=0,minimum size=2mm]at(B){};
+\node[fill=black,circle,inner sep=0,minimum size=2mm]at(C){};
+\draw[dashed](-4,-3)--++(0,6);
+\draw[dashed](4,-3)--++(0,6);
+\node[circle,draw,line width=.6mm,minimum width=1cm,minimum height=1cm]at(A){};
+\node[circle,draw=blue,line width=.6mm,minimum width=1.2cm,minimum height=1.2cm]at(B){};
+\node[dotted,circle,draw=blue,line width=.6mm,minimum width=1.2cm,minimum height=1.2cm]at(C){};
+\draw[->,draw=red,line width=.6mm](A)--(B)node[midway,below]{$\overline{\bbeta}$};
+\draw[->,draw=red,line width=.6mm](B)--($(B)!.35!(C)$)node[right]{$\dot{\overline{\bbeta}}_{M_z}$};
+\draw[->,draw=red,line width=.6mm](B)--++(0,1.1)node[right=1mm,fill=white]{$\dot{\overline{\bbeta}}_{P}$};
+\draw[->,dashed](B)to[out=50,in=-100](3.6,2.5);
+\draw[<-]($(B)+(-135:.7)$)--++(-.5,-.5)node[anchor=north,fill=white,align=center,font=\scriptsize]{current $\Phi$\\may change\\size and shape};
+\draw[<-]($(A)+(-135:.6)$)--++(-.5,-.5)node[fill=white,align=center,font=\scriptsize]{initial $\Phi$};
+\draw[<-]($(C)+(-45:.7)$)--++(.8,-.8)node[fill=white,align=center,font=\scriptsize]{current projected\\image of $\Phi$};
+\node[align=center,font=\scriptsize]at(2.8,2){trajectory\\of $\overline{\bbeta}$};
+\end{tikzpicture}

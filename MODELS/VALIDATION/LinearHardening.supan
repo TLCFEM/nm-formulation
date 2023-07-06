@@ -1,0 +1,34 @@
+node 1 0 0
+node 2 1 0
+
+section NM2D3 1 1 1 1 1 1. \
+.0 .0 0. \ ! isotropic
+.1 0 \ ! kinematic
+0. \ ! linear density
+1 2 0 2 0 2 ! surface
+
+element NMB21 1 1 2 1
+
+recorder 1 plain Node RF 2
+recorder 2 plain Node U 2
+
+fix2 1 P 1
+
+amplitude Tabular 1 loop
+
+displacement 2 1 1 3 2
+
+step static 1 3.6
+set ini_step_size 1E-2
+set fixed_step_size true
+set symm_mat false
+
+converger RelIncreDisp 1 1E-10 5 1
+
+analyze
+
+save recorder 1 2
+
+reset
+clear
+exit

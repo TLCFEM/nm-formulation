@@ -1,0 +1,191 @@
+\documentclass[3p,authoryear,11pt,fleqn,review]{elsarticle}
+\bibliographystyle{elsarticle-harv}
+\usepackage{amsmath,amsfonts,amssymb,siunitx,float,subcaption,setspace,booktabs,diagbox,bm,tikz,mathtools,tikz-3dplot,pgfplots,url}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{lineno}
+\usetikzlibrary{shapes.geometric}
+\pgfplotsset{compat=1.8}
+\journal{}
+\newcommand*{\mb}[1]{\bm{#1}}
+\newcommand*{\mT}{\mathrm{T}}
+\newcommand*{\md}[1]{\mathrm{d}#1}
+\newcommand*{\eqsref}[1]{Eq.~(\ref{#1})}
+\newcommand*{\figref}[1]{Fig.~\ref{#1}}
+\newcommand*{\tabref}[1]{Table~\ref{#1}}
+\newcommand*{\algoref}[1]{Algorithm~\ref{#1}}
+\newcommand*{\secref}[1]{\S~\ref{#1}}
+\newcommand*{\diag}[1]{\text{diag}\left(#1\right)}
+\newcommand*{\sign}[1]{\text{sign}\left(#1\right)}
+\newcommand*{\dev}[1]{\text{dev}\left(#1\right)}
+\newcommand*{\tr}[1]{\text{trace}\left(#1\right)}
+\newcommand*{\ddfrac}[2]{\dfrac{\md{#1}}{\md{#2}}}
+\newcommand*{\pdfrac}[2]{\dfrac{\partial{#1}}{\partial{#2}}}
+\newcommand{\bsigma}{\mb{\sigma}}
+\newcommand{\bvarepsilon}{\mb{\varepsilon}}
+\newcommand{\beeta}{\mb{\eta}}
+\newcommand{\bn}{\mb{n}}
+\newcommand{\balpha}{\mb{\alpha}}
+\newcommand{\bbeta}{\mb{\beta}}
+\newcommand{\bgamma}{\mb{\gamma}}
+\newcommand{\bq}{\mb{q}}
+\newcommand{\bs}{\mb{s}}
+\newcommand{\bc}{\mb{c}}
+\newcommand{\be}{\mb{e}}
+\newcommand{\bv}{\mb{v}}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}
+\makeatletter
+\let\oldabs\abs
+\def\abs{\@ifstar{\oldabs}{\oldabs*}}
+\let\oldnorm\norm
+\def\norm{\@ifstar{\oldnorm}{\oldnorm*}}
+\newenvironment{breakablealgorithm}
+{\begin{center}
+\refstepcounter{algorithm}
+\hrule height.8pt depth0pt \kern2pt
+\renewcommand{\caption}[2][\relax]{
+{\raggedright\textbf{\ALG@name~\thealgorithm} ##2\par}
+\ifx\relax##1\relax
+\addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##2}
+\else
+\addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##1}
+\fi
+\kern2pt\hrule\kern2pt
+}}{\kern2pt\hrule\relax
+\end{center}}
+\begin{document}
+\linenumbers
+\begin{abstract}
+\begin{linenumbers}
+The concept of generalised plasticity theory provides an appealing approach to developing efficient finite element models which could improve computational performance and allow flexibility in customising plastic response.
+In this work, we revisit its application in developing frame elements and reformulate a concentrated plasticity frame element to allow its axial force to interact with its end moments ($N$-$M$ interaction).
+The proposed element formulation relies on the physical implication of axial plasticity and updates its definition accordingly.
+By which, a single axial plasticity history can participate in plasticity evolution and $N$-$M$ interaction at both ends.
+The new formulation also redefines the hardening rules to recover desired hardening behaviour, which is not available in the previous formulation.
+In terms of numerical performance, the new formulation removes the potential bifurcation issue when both ends experience identical pure axial plasticity history.
+The proposed frame element is a high--performing alternative to simulate zero--length plastic hinge frame members that are frequently used in simulations in seismic engineering.
+\end{linenumbers}
+\end{abstract}
+\begin{keyword}
+concentrated plasticity frame element\sep
+$N$-$M$ interaction\sep
+generalised plasticity theory\sep
+hysteresis model
+\end{keyword}
+\begin{frontmatter}
+\title{Reformulation of Concentrated Plasticity Frame Element With $N$-$M$ Interaction and Generalised Plasticity}
+\author[add1]{Theodore~L.~Chang\corref{tlc}}\ead{tlcfem@gmail.com}
+\author[add2]{Chin-Long~Lee}
+\cortext[tlc]{corresponding author}
+\address[add1]{IRIS Adlershof, Humboldt-Universität zu Berlin, Berlin, Germany, 12489.}
+\address[add2]{Department of Civil and Natural Resources Engineering, University of Canterbury, Christchurch, New Zealand, 8041.}
+\end{frontmatter}
+\input{SEC/INTRO}
+\input{SEC/THEORY}
+\input{SEC/EXAMPLE}
+\bibliography{BIB}
+\clearpage
+\begin{table}[H]
+\centering\footnotesize\renewcommand{\arraystretch}{2}
+\caption{Summary of key expressions and parameters.}\label{tab:nm_key_eq}
+\begin{tabular}{r|l|l}
+    \toprule
+                        & previous model \citep{Kostic:et:al:13:EfficientBCElem}                                  & revised model                                                                                                                                                   \\ \midrule
+       nodal extraction &                                                                                         & $\left(\cdot\right)_\aleph=\mb{T}_\aleph\left(\cdot\right)$ for all nodal quantities                                                                            \\
+             kinematics & $\mb{q}=\mb{K}\left(\bv-\bv^p\right)$                                                   & $\mb{\overline{q}}=\overline{\be}-\overline{\be}^p$                                                                                                             \\
+          yield surface & $f_\aleph=\Phi_\aleph-H\alpha_\aleph$                                                   & $f=\langle\Phi_i\rangle+\langle\Phi_j\rangle$                                                                                                                   \\
+    interaction surface & $\Phi_\aleph=\Phi_\aleph\left(\mb{q}_\aleph,\bbeta_\aleph\right)$                       & $\Phi_\aleph=\Phi_\aleph\left(\mb{\overline{q}}_\aleph,\mb{\overline{\beta}}_\aleph,\overline{\alpha}_\aleph\right)$                                            \\
+                        & $\Phi_\aleph=\sum_{i=1}^{n}\left(a_i\prod_{r}\left(r-\beta_r\right)^{b_{i,r}}\right)-c$ & $\Phi_\aleph=\sum_{i=1}^{n}\left(a_i\prod_{r}\left(\dfrac{\overline{r}-\overline{\beta}_r}{h_r\left(\overline{\alpha}_\aleph\right)}\right)^{b_{i,r}}\right)-c$ \\
+              flow rule & $\dot{\overline{\bv}^p_\aleph}=\gamma_\aleph\pdfrac{f_\aleph}{\mb{q}_\aleph}$           & $\dot{\overline{\be}^p}=\gamma\mb{\zeta}=\gamma\pdfrac{f}{\mb{\overline{q}}}$                                                                                   \\
+    isotropic hardening & $\dot{\overline{\alpha}_\aleph}=\norm{\dot{\overline{\bv}^p_\aleph}}$                   & $\dot{\overline{\alpha}_\aleph}=\norm{\dot{\overline{\be}^p_\aleph}}=\norm{\mb{T}_\aleph\dot{\overline{\be}^p}}=\gamma\norm{\mb{T}_\aleph\mb{\zeta}}$           \\
+                        &                                                                                         & $h\left(\overline{\alpha}_\aleph\right)=1+H\overline{\alpha}+s-se^{-m\overline{\alpha}_\aleph}$                                                                 \\
+    kinematic hardening & $\dot{\overline{\bbeta}_\aleph}=K\mb{\varPi}\dot{\overline{\bv}^p_\aleph}$              & $\dot{\overline{\bbeta}}=K_b\dot{\overline{\be}^p}-K_a\norm{\dot{\overline{\be}^p}}\overline{\bbeta}$                                                           \\ \bottomrule
+\end{tabular}
+\end{table}
+\clearpage
+\begin{Large}
+Please note 15 figures are in the main body. Only the second last one is in the appendix. Please make proper adjustments if needed.
+\end{Large}
+\listoffigures
+\begin{figure}[p]
+\centering
+\includegraphics[page=1]{PICCOLLECTION}
+\caption{Deformation and resistance of a 2D beam.}\label{fig:kinematics}
+\end{figure}
+\begin{figure}[p]
+\centering\footnotesize
+\includegraphics[page=2]{PICCOLLECTION}
+\caption{Mixed evolution of an example $N$-$M$ interaction surface.}\label{fig:nm_anisotropic}
+\end{figure}
+\begin{figure}[p]
+\centering\footnotesize
+\includegraphics[page=3]{PICCOLLECTION}
+\caption{Definition of nodal equivalent plastic deformation of 2D beam.}\label{fig:nm_alpha}
+\end{figure}
+\begin{figure}[p]
+\centering\footnotesize
+\includegraphics[page=4]{PICCOLLECTION}
+\caption{Bounded evolution of nodal back resistance of a 2D beam.}\label{fig:nm_bounding_kin}
+\end{figure}
+\begin{figure}[p]
+\centering\footnotesize
+\includegraphics[page=5]{PICCOLLECTION}
+\caption{Isotropic hardening validation for axial force.}\label{fig:iso_hardening_a}
+\end{figure}
+\begin{figure}[p]
+\centering\footnotesize
+\includegraphics[page=6]{PICCOLLECTION}
+\caption{Isotropic hardening validation for transverse force.}\label{fig:iso_hardening_b}
+\end{figure}
+\begin{figure}[p]
+\centering\footnotesize
+\includegraphics[page=7]{PICCOLLECTION}
+\caption{Isotropic hardening validation for moment.}\label{fig:iso_hardening_c}
+\end{figure}
+\begin{figure}[p]
+\centering\footnotesize
+\includegraphics[page=8]{PICCOLLECTION}
+\caption{Kinematic hardening validation for axial force.}\label{fig:kin_hardening_a}
+\end{figure}
+\begin{figure}[p]
+\centering\footnotesize
+\includegraphics[page=9]{PICCOLLECTION}
+\caption{Kinematic hardening validation for transverse force.}\label{fig:kin_hardening_b}
+\end{figure}
+\begin{figure}[p]
+\centering\footnotesize
+\includegraphics[page=10]{PICCOLLECTION}
+\caption{Kinematic hardening validation for moment.}\label{fig:kin_hardening_c}
+\end{figure}
+\begin{figure}[p]
+\centering\footnotesize
+\includegraphics[page=11]{PICCOLLECTION}
+\caption{Calibration of hardening according to section analysis result.}\label{fig:nm_calibration}
+\end{figure}
+\begin{figure}[p]
+\centering\footnotesize
+\includegraphics[page=12]{PICCOLLECTION}
+\caption{Frame setup and plastic hinge distribution.}\label{fig:nm_frame_hinge}
+\end{figure}
+\begin{figure}[p]
+\centering\footnotesize
+\includegraphics[page=13]{PICCOLLECTION}
+\caption{Comparisons of initial NM interaction curves.}\label{fig:nm_surface_example}
+\end{figure}
+\begin{figure}[p]
+\centering\footnotesize
+\includegraphics[page=14]{PICCOLLECTION}
+\caption{Roof drift history using fibre element and the proposed element.}\label{fig:nm_frame_example}
+\end{figure}
+\begin{figure}[p]
+\centering\footnotesize
+\includegraphics[width=.99\textwidth]{MODELS/FRAME/RESULT/FRAME.RESULT}
+\caption{Hysteresis of frame members}\label{fig:hys}
+\end{figure}
+\begin{figure}[p]
+\centering\footnotesize
+\includegraphics[page=15]{PICCOLLECTION}
+\caption{Different rules of kinematic hardening evolution of a 2D beam.}\label{fig:nm_component_kin}
+\end{figure}
+\end{document}
