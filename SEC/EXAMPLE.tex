@@ -11,6 +11,21 @@ The interaction surface is defined as
 implying $H=0.1$.
 The theoretical hardening ratio can be computed according to \eqsref{eq:nm_eqv_iso_hardening}.
 \figref{fig:iso_hardening_a}, \figref{fig:iso_hardening_b} and \figref{fig:iso_hardening_c} present uniaxial cyclic isotropic hardening response under axial force, shear force, and end moment, respectively.
+\begin{figure}[htb]
+\centering\footnotesize
+\includegraphics[page=5]{PICCOLLECTION}
+\caption{Isotropic hardening validation for axial force.}\label{fig:iso_hardening_a}
+\end{figure}
+\begin{figure}[htb]
+\centering\footnotesize
+\includegraphics[page=6]{PICCOLLECTION}
+\caption{Isotropic hardening validation for transverse force.}\label{fig:iso_hardening_b}
+\end{figure}
+\begin{figure}[htb]
+\centering\footnotesize
+\includegraphics[page=7]{PICCOLLECTION}
+\caption{Isotropic hardening validation for moment.}\label{fig:iso_hardening_c}
+\end{figure}
 Due to numerical discretisation, some points fall in the transition region(s) and lead to intermediate stiffness values.
 They can be ignored.
 The desired linear isotropic hardening ratio is properly generated no matter which end yields.
@@ -23,6 +38,21 @@ The adopted linear kinematic hardening rule is defined as
 \end{gather}
 The theoretical hardening ratio can be computed according to \eqsref{eq:nm_eqv_kin_hardening}.
 \figref{fig:kin_hardening_a}, \figref{fig:kin_hardening_b} and \figref{fig:kin_hardening_c} present uniaxial cyclic kinematic hardening response under axial force, shear force, and end moment, respectively.
+\begin{figure}[htb]
+\centering\footnotesize
+\includegraphics[page=8]{PICCOLLECTION}
+\caption{Kinematic hardening validation for axial force.}\label{fig:kin_hardening_a}
+\end{figure}
+\begin{figure}[htb]
+\centering\footnotesize
+\includegraphics[page=9]{PICCOLLECTION}
+\caption{Kinematic hardening validation for transverse force.}\label{fig:kin_hardening_b}
+\end{figure}
+\begin{figure}[htb]
+\centering\footnotesize
+\includegraphics[page=10]{PICCOLLECTION}
+\caption{Kinematic hardening validation for moment.}\label{fig:kin_hardening_c}
+\end{figure}
 The target linear kinematic hardening behaviour is also properly generated.
 The hardening ratio stays constant (as assigned) for all DoFs, no matter whether one end yields or both ends yield.
 \subsection{Calibration}
@@ -38,6 +68,11 @@ To reproduce the Bauschinger effect, kinematic hardening is activated with the f
 This gives $B_s=K_b/K_a=0.5$, which meets the shape factor \num{1.5}.
 
 The comparison can be seen in \figref{fig:nm_calibration}.
+\begin{figure}[htb]
+\centering\footnotesize
+\includegraphics[page=11]{PICCOLLECTION}
+\caption{Calibration of hardening according to section analysis result.}\label{fig:nm_calibration}
+\end{figure}
 The overall hysteresis shape can be well captured, and the theoretical maximum moment ($M_{max}=3$) of the section is properly reflected.
 Fine--tuning of hardening behaviour can be achieved by, for example, adopting a multiplicative formulation \citep{Chaboche1989}.
 The saturation can be associated with the shape factor of the section, which is essentially the ratio between the plastic section modulus and the elastic section modulus, with both usually available in section property tables.
@@ -45,6 +80,11 @@ With a specific $N$-$M$ interaction surface, it is possible to adjust the respon
 \subsection{A Frame Example}
 The performance of the proposed element is compared with that of conventional force-based fibre elements via a response history analysis of a three--storey steel frame structure.
 The geometry and dimension of the frame are shown in \figref{fig:nm_frame_hinge}.
+\begin{figure}[htb]
+\centering\footnotesize
+\includegraphics[page=12]{PICCOLLECTION}
+\caption{Frame setup and plastic hinge distribution.}\label{fig:nm_frame_hinge}
+\end{figure}
 The floor mass is \SI{10}{kips\cdot{}s^2/ft} which is lumped on nodes according to tributary length/area and is applied to both horizontal and vertical DoFs.
 A uniform damping ratio of \SI{5}{\percent}, which may be high for practical steel structures but is acceptable from the design perspective, using the bell-shaped damping model \citep{Lee2020a,Lee2020b,Lee2021,Lee2022} is defined to cover the response that falls in the frequency range from \SI{0.001}{\radian\per\second} to \SI{1000}{\radian\per\second}, which is sufficient for the target structure with only hardening response.
 The material elastic modulus $E$ is set to $E=\SI{29000}{ksi}$ and the yield stress is set to $\sigma^y=\SI{50}{ksi}$.
@@ -58,12 +98,27 @@ Six integration points (sections) along the element chord are used.
 For each section, ten integration points along the depth of the section are assigned, resulting in \num{60} material integration points per element.
 For the material model, a bilinear hardening model with \SI{1}{\percent} linear isotropic hardening is used.
 
+\begin{figure}[htb]
+\centering\footnotesize
+\includegraphics[page=13]{PICCOLLECTION}
+\caption{Comparisons of initial NM interaction curves.}\label{fig:nm_surface_example}
+\end{figure}
 For the proposed beam element, \SI{1}{\percent} linear isotropic hardening is assigned, and kinematic hardening parameters are determined following the same aforementioned procedure. In specific, the hardening speed $K_a$ is set to unity $K_a=1$, which can be further calibrated, while $K_b/K_a=\dfrac{\text{Plastic Section Modulus}}{\text{Elastic Section Modulus}}-1$.
 All section properties are taken from the design manual \citep{AISC2017}. \eqsref{eq:nm_surface_used} is chosen to be the $N$-$M$ interaction surface with $c=1.15$. The comparisons between \eqsref{eq:nm_surface_used} and the ones generated by section analysis is shown in \figref{fig:nm_surface_example}.
 
 The roof drift history is given in \figref{fig:nm_frame_example}.
+\begin{figure}[htb]
+\centering\footnotesize
+\includegraphics[page=14]{PICCOLLECTION}
+\caption{Roof drift history using fibre element and the proposed element.}\label{fig:nm_frame_example}
+\end{figure}
 With the maximum drift being \SI{1.5}{\percent}, significant plasticity is developed as shown in \figref{fig:nm_frame_hinge}, but the drift history shows no significant difference.
 
+\begin{figure}[p]
+\centering\footnotesize
+\includegraphics[width=.99\textwidth]{MODELS/FRAME/RESULT/FRAME.RESULT}
+\caption{Hysteresis of frame members}\label{fig:hys}
+\end{figure}
 In terms of computational cost, for this specific structure, in a parallel context, performing a full response history analysis with the proposed element takes around \SI{30}{\percent} less wall clock time. Note that the number is indicative and may vary depending on different configurations. Excluding the time spent on solving the global matrix, the cost of which is not relevant to element formulations, the proposed element takes around \SI{80}{\percent} less time in terms of sole state determination. Given that the solution of the global matrix typically accounts for a significant portion of the overall computational time, a reduction of \SI{30}{\percent} is regarded as decent.
 
 To close this example, the hysteresis of frame members is presented in \figref{fig:hys}.
@@ -117,6 +172,11 @@ K_{a,P}&\cdot&\cdot\\
 The $K_a$ and $K_b$ pairs can be independently calibrated for each component to match the corresponding section properties of strong/weak axes.
 
 Furthermore, consider an idealised bilinear material model, under pure axial deformation, the axial force resistance follows the material model and generates a bilinear response. However, under pure bending deformation, the end moment develops plasticity gradually and generates a non-linear response, which asymptotically approaches the plastic moment after yielding. One can set $K_{a,P}=0$, $K_{a,M_z}\neq0$ and $K_{a,M_y}\neq0$ so that axial back resistance evolves linearly while bending resistance evolves non-linearly. A graphical illustration of 2D elements is given in \figref{fig:nm_component_kin}.
+\begin{figure}[htb]
+\centering\footnotesize
+\includegraphics[page=15]{PICCOLLECTION}
+\caption{Different rules of kinematic hardening evolution of a 2D beam.}\label{fig:nm_component_kin}
+\end{figure}
 \section*{Data Availability Statement}
 Some or all data, models, or code that support the findings of this study are available from the corresponding author upon reasonable request.
 The corresponding model scripts are available online\footnote{\url{https://github.com/TLCFEM/nm-formulation}}.
