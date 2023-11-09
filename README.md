@@ -1,6 +1,6 @@
 # Reformulation of Concentrated Plasticity Frame Element With N-M Interaction and Generalised Plasticity
 
-This repository contains the source code and example models of paper [10.1061/JSENDH/STENG-12176](https://doi.org/10.1061/JSENDH/STENG-12176).
+This repository contains the source code and example models of paper [10.1061/JSENDH.STENG-12176](https://doi.org/10.1061/JSENDH.STENG-12176).
 
 To cite or reproduce figures in the paper, you can find the corresponding figure and copy the source code in your work.
 
